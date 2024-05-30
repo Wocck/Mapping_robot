@@ -18,8 +18,6 @@
 #include "include/motorDriver.hpp"
 #include "include/positionTracker.hpp"
 #include "include/pulserDriver.hpp"
-#include "include/ultrasonicSensorDriver.hpp"
-#include "include/wallFollower.hpp"
 
 #ifndef SHELL_BUFSIZE
 #define SHELL_BUFSIZE (128U)
@@ -39,12 +37,7 @@ MotorDriver *motorR = nullptr;
 MotorDriver *motorL = nullptr;
 PulserDriver *pulserR = nullptr;
 PulserDriver *pulserL = nullptr;
-UltrasonicSensorDriver *ultrasonicSensorL = nullptr;
-UltrasonicSensorDriver *ultrasonicSensorR = nullptr;
-UltrasonicSensorDriver *ultrasonicSensorM = nullptr;
 DualMotorController *motController = nullptr;
-WallFollower *wallFollower = nullptr;
-PositionTracker *posTracker = nullptr;
 
 static int cmd_send(int argc, char **argv) {
   if (argc < 2) {
@@ -72,16 +65,7 @@ int main(void) {
   motorL = new MotorDriver(&(devicesConfig::motorLeft));
   pulserR = new PulserDriver(&(devicesConfig::pulserRight));
   pulserL = new PulserDriver(&(devicesConfig::pulserLeft));
-  ultrasonicSensorL =
-      new UltrasonicSensorDriver(&(devicesConfig::ultrasonicSensorLeft));
-  ultrasonicSensorR =
-      new UltrasonicSensorDriver(&(devicesConfig::ultrasonicSensorRight));
-  ultrasonicSensorM =
-      new UltrasonicSensorDriver(&(devicesConfig::ultrasonicSensorMiddle));
   motController = new DualMotorController(motorR, motorL, pulserL, pulserR, 20);
-  wallFollower =
-      new WallFollower(motController, ultrasonicSensorM, ultrasonicSensorR);
-  posTracker = new PositionTracker(pulserL, pulserR);
 
   btUART = new BluetoothUART(UART_DEV(1), 115200, motController, nullptr);
   liUART = new LidarUART(UART_DEV(2), 230400, nullptr);
@@ -89,7 +73,7 @@ int main(void) {
   liUART->setBluetoothUART(btUART);
   liUART->init();
   btUART->init();
-  //liUART->startReceiving();
+  // liUART->startReceiving();
 
   char line_buf[SHELL_BUFSIZE];
   shell_run(shell_commands, line_buf, SHELL_BUFSIZE);
