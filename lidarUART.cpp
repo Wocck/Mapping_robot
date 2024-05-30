@@ -39,8 +39,6 @@ void LidarUART::rxCallback(void *arg, uint8_t data) {
   msg_t msg;
   msg.content.value = (uint32_t)dev;
   msg_send(&msg, _dataReceiverPid);
-
-  //printf("%x ", data);
 }
 
 void *LidarUART::dataReceiveThread(void *arg) {
@@ -55,8 +53,7 @@ void *LidarUART::dataReceiveThread(void *arg) {
 
   instance->_startTime = xtimer_now_usec();
   while (!instance->_shouldTerminate) {
-    if (xtimer_now_usec() - instance->_startTime >= RECEIVE_TIME_MS*1000) {
-      printf("LidarUART stopped receiving\r\n");
+    if (xtimer_now_usec() - instance->_startTime >= RECEIVE_TIME_MS * 1000) {
       instance->stopReceiving();
       break;
     }
@@ -134,25 +131,24 @@ void LidarUART::processData(uint8_t *data, size_t len) {
   uint8_t end = 0x2C;
   _bluetoothUART->send(&start, 1);
   _bluetoothUART->send(&end, 1);
-  for(size_t i = 0; i < temp_index; i++){
+  for (size_t i = 0; i < temp_index; i++) {
     _bluetoothUART->send(temp_data[i]);
   }
   //_bluetoothUART->send(temp_data, temp_index);
 }
 
 void LidarUART::startReceiving() {
-  printf("trying to start lidar receiving\r\n");
+  printf("Attempting to Start lidar processing thread\r\n");
   _shouldTerminate = false;
   if (_dataReceiverPid == KERNEL_PID_UNDEF) {
     _dataReceiverPid = thread_create(
-        _dataReceiverThread, sizeof(_dataReceiverThread), DATARECEIVER_PRIO,
-        0, dataReceiveThread, this, "LidarReceiver");
+        _dataReceiverThread, sizeof(_dataReceiverThread), DATARECEIVER_PRIO, 0,
+        dataReceiveThread, this, "LidarReceiver");
   }
-  
 }
 
 void LidarUART::stopReceiving() {
-  printf("trying to stop lidar receiving\r\n");
+  printf("Attempting to Stop lidar processing thread\r\n");
   if (_dataReceiverPid != KERNEL_PID_UNDEF) {
     _shouldTerminate = true;
     msg_t msg;
@@ -162,6 +158,5 @@ void LidarUART::stopReceiving() {
     // Zaczekaj na zakończenie wątku
     xtimer_msleep(50);
     _dataReceiverPid = KERNEL_PID_UNDEF;
-    printf("Lidar receiving stopped and thread cleared\r\n");
   }
 }
