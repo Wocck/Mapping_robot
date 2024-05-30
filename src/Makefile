@@ -2,7 +2,7 @@ APPLICATION = mapbot
 BOARD ?= nucleo-l476rg
 
 #RIOTBASE ?= /data/RIOT/RIOT
-RIOTBASE ?= $(CURDIR)/../RIOT
+RIOTBASE ?= $(CURDIR)/../../RIOT
 
 FEATURES_REQUIRED += periph_timer
 FEATURES_REQUIRED += cpp
