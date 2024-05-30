@@ -1,1 +1,2 @@
-/bin
+/bin/
+bin/nucleo-l476rg/core/mutex.d
