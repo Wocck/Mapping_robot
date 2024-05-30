@@ -1,0 +1,360 @@
+[
+  {
+    "type": "BluetoothDriver",
+    "fields": [],
+    "methods": [
+      {
+        "name": "BluetoothDriver",
+        "params": []
+      },
+      {
+        "name": "~BluetoothDriver",
+        "params": []
+      },
+      {
+        "name": "init",
+        "params": []
+      },
+      {
+        "name": "send",
+        "params": [
+          {
+            "type": "const char*",
+            "name": "data"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "DualMotorController",
+    "fields": [
+      {
+      "type": "MotorDriver*",
+      "name": "motorR",
+      "isClass": "true"
+    },
+    {
+      "type": "MotorDriver*",
+      "name": "motorL",
+      "isClass": "true"
+    }
+
+    ],
+    "methods": [
+      {
+        "name": "DualMotorController",
+        "params": [
+          {
+            "type": "MotorDriver*",
+            "name": "motorR"
+          },
+          {
+            "type": "MotorDriver*",
+            "name": "motorL"
+          },
+          {
+            "type": "PulserDriver*",
+            "name": "pulserL"
+          },
+          {
+            "type": "PulserDriver*",
+            "name": "pulserR"
+          },
+          {
+            "type": "int16_t",
+            "name": "bias"
+          }
+        ]
+      },
+      {
+        "name": "forward",
+        "params": [
+          {
+            "type": "uint16_t",
+            "name": "power"
+          },
+          {
+            "type": "int16_t",
+            "name": "direction"
+          }
+        ]
+      },
+      {
+        "name": "stop",
+        "params": []
+      },
+      {
+        "name": "rotateL",
+        "params": [
+          {
+            "type": "uint16_t",
+            "name": "degrees"
+          },
+          {
+            "type": "uint16_t",
+            "name": "power"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "MotorDriver",
+    "fields": [
+      {
+        "access": "private",
+        "type": "devicesConfig::Motor*",
+        "name": "mot"
+      },
+      {
+        "access": "private",
+        "type": "uint16_t",
+        "name": "power"
+      }
+    ],
+    "methods": [
+      {
+        "name": "MotorDriver",
+        "params": [
+          {
+            "type": "devicesConfig::Motor*",
+            "name": "m"
+          }
+        ]
+      },
+      {
+        "name": "forward",
+        "params": []
+      },
+      {
+        "name": "reverse",
+        "params": []
+      },
+      {
+        "name": "stop",
+        "params": []
+      },
+      {
+        "name": "setPower",
+        "params": [
+          {
+            "type": "uint16_t",
+            "name": "power"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "PositionTracker",
+    "fields": [
+      {
+        "access": "private",
+        "type": "PulserDriver*",
+        "name": "pulserL",
+        "isClass": "true"
+      },
+      {
+        "access": "private",
+        "type": "PulserDriver*",
+        "name": "pulserR",
+        "isClass": "true"
+      },
+      {
+        "access": "private",
+        "type": "long",
+        "name": "previous_left_count"
+      },
+      {
+        "access": "private",
+        "type": "long",
+        "name": "previous_right_count"
+      },
+      {
+        "access": "private",
+        "type": "long",
+        "name": "position_x"
+      },
+      {
+        "access": "private",
+        "type": "long",
+        "name": "position_y"
+      },
+      {
+        "access": "private",
+        "type": "double",
+        "name": "position_theta"
+      },
+      {
+        "access": "private",
+        "type": "char*",
+        "name": "updatingThreadStack"
+      },
+      {
+        "access": "private",
+        "type": "bool",
+        "name": "running"
+      }
+    ],
+    "methods": [
+      {
+        "name": "PositionTracker",
+        "params": [
+          {
+            "type": "PulserDriver*",
+            "name": "pulserL"
+          },
+          {
+            "type": "PulserDriver*",
+            "name": "pulserR"
+          }
+        ]
+      },
+      {
+        "name": "start",
+        "params": []
+      },
+      {
+        "name": "stop",
+        "params": []
+      },
+      {
+        "name": "~PositionTracker",
+        "params": []
+      }
+    ]
+  },
+  {
+    "type": "PulserDriver",
+    "fields": [
+      {
+        "access": "private",
+        "type": "atomic_ulong",
+        "name": "pulses"
+      },
+      {
+        "access": "private",
+        "type": "devicesConfig::Pulser*",
+        "name": "pulser"
+      },
+      {
+        "access": "private",
+        "type": "char*",
+        "name": "countingThreadStack"
+      }
+    ],
+    "methods": [
+      {
+        "name": "PulserDriver",
+        "params": [
+          {
+            "type": "devicesConfig::Pulser*",
+            "name": "p"
+          }
+        ]
+      },
+      {
+        "name": "read",
+        "params": [],
+        "returns": "unsigned long"
+      },
+      {
+        "name": "clear",
+        "params": []
+      }
+    ]
+  },
+  {
+    "type": "UltrasonicSensorDriver",
+    "fields": [
+      {
+        "access": "private",
+        "type": "devicesConfig::UltrasonicSensor*",
+        "name": "sensor"
+      }
+    ],
+    "methods": [
+      {
+        "name": "UltrasonicSensorDriver",
+        "params": [
+          {
+            "type": "devicesConfig::UltrasonicSensor*",
+            "name": "s"
+          }
+        ]
+      },
+      {
+        "name": "measure",
+        "params": [],
+        "returns": "unsigned long"
+      }
+    ]
+  },
+  {
+    "type": "WallFollower",
+    "fields": [
+      {
+        "access": "private",
+        "type": "DualMotorController*",
+        "name": "dmc",
+        "isClass": "true"
+      },
+      {
+        "access": "private",
+        "type": "UltrasonicSensorDriver*",
+        "name": "sensorM",
+        "isClass": "true"
+      },
+      {
+        "access": "private",
+        "type": "UltrasonicSensorDriver*",
+        "name": "sensorR",
+        "isClass": "true"
+      },
+      {
+        "access": "private",
+        "type": "bool",
+        "name": "running"
+      },
+      {
+        "access": "private",
+        "type": "char*",
+        "name": "followingThreadStack"
+      }
+    ],
+    "methods": [
+      {
+        "name": "WallFollower",
+        "params": [
+          {
+            "type": "DualMotorController*",
+            "name": "dmc"
+          },
+          {
+            "type": "UltrasonicSensorDriver*",
+            "name": "sensorM"
+          },
+          {
+            "type": "UltrasonicSensorDriver*",
+            "name": "sensorR"
+          }
+        ]
+      },
+      {
+        "name": "start",
+        "params": []
+      },
+      {
+        "name": "stop",
+        "params": []
+      },
+      {
+        "name": "~WallFollower",
+        "params": []
+      }
+    ]
+  }
+]
+
+
