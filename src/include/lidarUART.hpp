@@ -15,7 +15,7 @@
 #endif
 #define DATARECEIVER_PRIO   (THREAD_PRIORITY_MAIN - 1)
 
-#define RECEIVE_TIME_MS     (4000)
+#define RECEIVE_TIME_MS     (12000)
 
 // Forward declaration of BluetoothUART
 class BluetoothUART;

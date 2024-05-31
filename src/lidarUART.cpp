@@ -158,5 +158,7 @@ void LidarUART::stopReceiving() {
     // Zaczekaj na zakończenie wątku
     xtimer_msleep(50);
     _dataReceiverPid = KERNEL_PID_UNDEF;
+    uint8_t end_sequence[4] = {0xFF, 0xFF, 0x00, 0xFF};
+    _bluetoothUART->send(end_sequence, 4);
   }
 }
